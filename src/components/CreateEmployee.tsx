@@ -2,6 +2,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
+import { useEmployeeContext } from '../context/UseEmployeeContext';
 import { departments } from '../utils/Departments';
 import { states } from '../utils/States';
 
@@ -10,11 +11,28 @@ export default function CreateEmployee() {
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
-  const [department, setDepartment] = useState<{label: string; value: string } | null>(null);
-  const [state, setState] = useState<{label: string; value: string } | null>(null);
+  const [department, setDepartment] = useState<{ label: string; value: string } | null>(null);
+  const [state, setState] = useState<{ label: string; value: string } | null>(null);
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
+
+  const { addEmployee } = useEmployeeContext();
+
+  const saveEmployee = () => {
+    const employee = {
+      firstName,
+      lastName,
+      dateOfBirth: dateOfBirth?.toLocaleDateString() || '',
+      startDate: startDate?.toLocaleDateString() || '',
+      department: department?.value || '',
+      street,
+      city,
+      state: state?.value || '',
+      zipCode
+    };
+    addEmployee(employee);
+  }
 
   return (
     <>
@@ -104,7 +122,7 @@ export default function CreateEmployee() {
           className="form-control"
         />
       </form>
-      <button>Save</button>
+      <button onClick={saveEmployee}>Save</button>
     </>
   )
 }
