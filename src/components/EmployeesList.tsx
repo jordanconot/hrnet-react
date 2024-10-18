@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
 import { useEmployeeContext } from "../context/UseEmployeeContext";
+import SearchBar from "./SearchBar";
 
 interface Employee {
   firstName: string;
@@ -28,15 +30,29 @@ const columns = [
 
 export default function EmployeesList() {
   const { employees } = useEmployeeContext();
-  const [filteredEmployees, setFilteredEmployees] = useState(employees)
+  const [filteredEmployees, setFilteredEmployees] = useState(employees);
+
+  const handleSearch = (searchTerm: string) => {
+    if (searchTerm) {
+      const filtered = employees.filter(employee =>
+        employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredEmployees(filtered);
+    } else {
+      setFilteredEmployees(employees);
+    }
+  }
 
   return (
     <div className="container">
+      <SearchBar onSearch={handleSearch} />
       <DataTable
         columns={columns}
         data={filteredEmployees}
         pagination
       />
+      <Link to='/'>Home</Link>
     </div>
   )
-}
+};

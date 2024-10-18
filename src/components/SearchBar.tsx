@@ -13,4 +13,4 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
       />
     </div>
   )
-}
+};

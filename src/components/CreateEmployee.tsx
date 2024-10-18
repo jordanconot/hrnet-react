@@ -32,7 +32,7 @@ export default function CreateEmployee() {
       zipCode
     };
     addEmployee(employee);
-  }
+  };
 
   return (
     <>
@@ -125,4 +125,4 @@ export default function CreateEmployee() {
       <button onClick={saveEmployee}>Save</button>
     </>
   )
-}
+};
