@@ -1,3 +1,4 @@
+import Modal from 'demo-module-test-hrnet';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,6 +17,7 @@ export default function CreateEmployee() {
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { addEmployee } = useEmployeeContext();
 
@@ -32,7 +34,12 @@ export default function CreateEmployee() {
       zipCode
     };
     addEmployee(employee);
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
 
   return (
     <>
@@ -123,6 +130,13 @@ export default function CreateEmployee() {
         />
       </form>
       <button onClick={saveEmployee}>Save</button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        text="Employee Created!"
+        backgroundColor='#fff'
+        buttonColor="#000"
+      />
     </>
   )
 };
