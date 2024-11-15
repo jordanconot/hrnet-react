@@ -21,20 +21,90 @@ export default function CreateEmployee() {
 
   const { addEmployee } = useEmployeeContext();
 
-  const saveEmployee = () => {
-    const employee = {
-      firstName,
-      lastName,
-      dateOfBirth: dateOfBirth?.toLocaleDateString() || '',
-      startDate: startDate?.toLocaleDateString() || '',
-      department: department?.value || '',
-      street,
-      city,
-      state: state?.value || '',
-      zipCode
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    dateOfBirth: false,
+    startDate: false,
+    department: false,
+    street: false,
+    city: false,
+    state: false,
+    zipCode: false,
+  });
+
+  const validateFields = () => {
+    const newErrors = {
+      firstName: firstName.trim() === '',
+      lastName: lastName.trim() === '',
+      dateOfBirth: dateOfBirth === null,
+      startDate: startDate === null,
+      department: department === null,
+      street: street.trim() === '',
+      city: city.trim() === '',
+      state: state === null,
+      zipCode: zipCode.trim() === '',
     };
-    addEmployee(employee);
-    setIsModalOpen(true);
+    setErrors(newErrors);
+
+    return !Object.values(newErrors).some((error) => error);
+  };
+
+  const saveEmployee = () => {
+    if (validateFields()) {
+      const employee = {
+        firstName,
+        lastName,
+        dateOfBirth: dateOfBirth?.toLocaleDateString() || '',
+        startDate: startDate?.toLocaleDateString() || '',
+        department: department?.value || '',
+        street,
+        city,
+        state: state?.value || '',
+        zipCode,
+      };
+      addEmployee(employee);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleFieldChange = (
+    field: 'firstName' | 'lastName' | 'street' | 'city' | 'zipCode' | 'dateOfBirth' | 'startDate' | 'state' | 'department',
+    value: string | Date | { label: string; value: string } | null
+  ) => {
+    setErrors((prev) => ({ ...prev, [field]: false }));
+
+    switch (field) {
+      case 'firstName':
+        setFirstName(value as string);
+        break;
+      case 'lastName':
+        setLastName(value as string);
+        break;
+      case 'street':
+        setStreet(value as string);
+        break;
+      case 'city':
+        setCity(value as string);
+        break;
+      case 'zipCode':
+        setZipCode(value as string);
+        break;
+      case 'dateOfBirth':
+        setDateOfBirth(value as Date | null);
+        break;
+      case 'startDate':
+        setStartDate(value as Date | null);
+        break;
+      case 'state':
+        setState(value as { label: string; value: string } | null);
+        break;
+      case 'department':
+        setDepartment(value as { label: string; value: string } | null);
+        break;
+      default:
+        break;
+    }
   };
 
   const closeModal = () => {
@@ -47,40 +117,44 @@ export default function CreateEmployee() {
         <label htmlFor="first-name">First Name</label>
         <input
           type="text"
-          className="form-control"
+          className={`form-control ${errors.firstName ? 'error' : ''}`}
           id="first-name"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => handleFieldChange('firstName', e.target.value)}
         />
+        {errors.firstName && <div className="error-message">First Name is required</div>}
 
         <label htmlFor="last-name">Last Name</label>
         <input
           type="text"
-          className="form-control"
+          className={`form-control ${errors.lastName ? 'error' : ''}`}
           id="last-name"
           value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => handleFieldChange('lastName', e.target.value)}
         />
+        {errors.lastName && <div className="error-message">Last Name is required</div>}
 
         <label htmlFor="date-of-birth">Date of Birth</label>
         <div id="date-of-birth">
           <DatePicker
             dateFormat="MM/dd/yyyy"
-            className="form-control"
+            className={`form-control ${errors.dateOfBirth ? 'error' : ''}`}
             selected={dateOfBirth}
-            onChange={(date: Date | null) => setDateOfBirth(date)}
+            onChange={(date) => handleFieldChange('dateOfBirth', date)}
           />
         </div>
+        {errors.dateOfBirth && <div className="error-message">Date of birth is required</div>}
 
         <label htmlFor="start-date">Start Date</label>
         <div id="start-date">
           <DatePicker
             dateFormat="MM/dd/yyyy"
-            className="form-control"
+            className={`form-control ${errors.startDate ? 'error' : ''}`}
             selected={startDate}
-            onChange={(date: Date | null) => setStartDate(date)}
+            onChange={(date) => handleFieldChange('startDate', date)}
           />
         </div>
+        {errors.startDate && <div className="error-message">Start date is required</div>}
 
         <fieldset className="address">
           <legend>Address</legend>
@@ -88,46 +162,51 @@ export default function CreateEmployee() {
           <label htmlFor="street">Street</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${errors.street ? 'error' : ''}`}
             id="street"
             value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            onChange={(e) => handleFieldChange('street', e.target.value)}
           />
+          {errors.street && <div className="error-message">Street is required</div>}
 
           <label htmlFor="city">City</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${errors.city ? 'error' : ''}`}
             id="city"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => handleFieldChange('city', e.target.value)}
           />
+          {errors.city && <div className="error-message">City is required</div>}
 
           <label htmlFor="state">State</label>
           <Select
             options={states}
             value={state}
-            onChange={setState}
-            className="form-control"
+            onChange={(selectedOption) => handleFieldChange('state', selectedOption)}
+            className={`form-control ${errors.state ? 'error' : ''}`}
           />
+          {errors.state && <div className="error-message">State is required</div>}
 
           <label htmlFor="zip-code">Zip Code</label>
           <input
             type="number"
-            className="form-control"
+            className={`form-control ${errors.zipCode ? 'error' : ''}`}
             id="zip-code"
             value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
+            onChange={(e) => handleFieldChange('zipCode', e.target.value)}
           />
+          {errors.zipCode && <div className="error-message">Zip code is required</div>}
         </fieldset>
 
         <label htmlFor="department">Department</label>
         <Select
           options={departments}
           value={department}
-          onChange={setDepartment}
-          className="form-control"
+          onChange={(selectedOption) => handleFieldChange('department', selectedOption)}
+          className={`form-control ${errors.department ? 'error' : ''}`}
         />
+        {errors.department && <div className="error-message">Department is required</div>}
       </form>
       <button onClick={saveEmployee}>Save</button>
       <Modal
