@@ -4,7 +4,7 @@ import Home from '../pages/Home';
 
 export default function AppRouter() {
   return (
-    <Router>
+    <Router basename='/hrnet-react'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='employees-list' element={<Employees />} />
