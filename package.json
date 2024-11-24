@@ -1,8 +1,11 @@
 {
   "name": "hrnet",
+  "author": "Wealth-Health",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0",
   "type": "module",
+  "description": "Employee management file",
+  "keywords": ["hrnet", "employee-management", "react", "vite", "typescript"],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
