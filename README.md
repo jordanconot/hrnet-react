@@ -18,7 +18,7 @@ A React and TypeScript-powered web application for managing employee records. Ad
 
 ## 📖 Description
 
-The **Employee Management Application** simplifies employee record manangement. Users can:
+The **HRnet** simplifies employee record manangement. Users can:
 - Add new employees.
 - View the list of all employees.
 - Search or filter based on various criteria.
@@ -31,7 +31,7 @@ The app stores data locally, making it lightweight and fast.
 
 - Add new employees with details such as name, date of birth, department, address, and more.
 - View and filter employees using a dynamic data table.
-- Real-time search functionality dor quick access.
+- Real-time search functionality for quick access.
 - Modal confirmations for improved UX.
 - React Context and local storage to persist data.
 
@@ -43,7 +43,7 @@ This application is built with the following technologies:
 
 - **React**: Frontend library for building UI.
 - **TypeScript**: Ensures type safety and robust development.
-- **React-Router-DOM**: For client-side rounting.
+- **React-Router-DOM**: For client-side routing.
 - **React-Select**: Customisable dropdown menus.
 - **React-Datepicker**: User-friendly date selection.
 - **React-Data-Table-Component**: Interactive and sortable data tables.
@@ -53,6 +53,11 @@ This application is built with the following technologies:
 ---
 
 ## 🚀 Installation
+
+### Prerequisites
+
+Make sure you have the following installed:
+- **Node.js**: >= 16.0.0
 
 Follow these steps to set up and run the application locally:
 
@@ -115,11 +120,11 @@ The app has two main routes:
 
 **Adding Employees**:
 
-- Employees ared added via the **Home Page**, where a form is provided to input details.
+- Employees are added via the **Home Page**, where a form is provided to input details.
 - Validation ensures all required fields are filled out.
 - Upon submission, the employee is saved to `localStorage` and displayed in the **Employees List**.
 
-**Viewing Employess**:
+**Viewing Employees**:
 
 - The **Employees List** route displays all employees in a table.
 - Users can sort the table by any column or filter employees via a search bar.
