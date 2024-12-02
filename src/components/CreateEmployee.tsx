@@ -203,6 +203,7 @@ export default function CreateEmployee() {
         <Select
           options={departments}
           value={department}
+          id='department'
           onChange={(selectedOption) => handleFieldChange('department', selectedOption)}
           className={`form-control ${errors.department ? 'error' : ''}`}
         />
