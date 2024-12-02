@@ -135,25 +135,25 @@ export default function CreateEmployee() {
         {errors.lastName && <div className="error-message">Last Name is required</div>}
 
         <label htmlFor="date-of-birth">Date of Birth</label>
-        <div id="date-of-birth">
           <DatePicker
+            id='date-of-birth'
+            aria-labelledby='date-of-birth'
             dateFormat="MM/dd/yyyy"
             className={`form-control ${errors.dateOfBirth ? 'error' : ''}`}
             selected={dateOfBirth}
             onChange={(date) => handleFieldChange('dateOfBirth', date)}
           />
-        </div>
         {errors.dateOfBirth && <div className="error-message">Date of birth is required</div>}
 
         <label htmlFor="start-date">Start Date</label>
-        <div id="start-date">
           <DatePicker
+            id='start-date'
+            aria-labelledby='start-date'
             dateFormat="MM/dd/yyyy"
             className={`form-control ${errors.startDate ? 'error' : ''}`}
             selected={startDate}
             onChange={(date) => handleFieldChange('startDate', date)}
           />
-        </div>
         {errors.startDate && <div className="error-message">Start date is required</div>}
 
         <fieldset className="address">
@@ -181,6 +181,8 @@ export default function CreateEmployee() {
 
           <label htmlFor="state">State</label>
           <Select
+            id='state'
+            aria-labelledby='state'
             options={states}
             value={state}
             onChange={(selectedOption) => handleFieldChange('state', selectedOption)}
@@ -204,6 +206,7 @@ export default function CreateEmployee() {
           options={departments}
           value={department}
           id='department'
+          aria-labelledby='department'
           onChange={(selectedOption) => handleFieldChange('department', selectedOption)}
           className={`form-control ${errors.department ? 'error' : ''}`}
         />
